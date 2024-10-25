@@ -47,7 +47,7 @@ public class DataLoader {
 
             // Vytvoření zařízení
             Device d1 = new Device();
-            d1.setName("Telefon");
+            d1.setName("meteorologicalStation");
 
             // Uložení zařízení
             deviceRepository.save(d1);
@@ -67,18 +67,18 @@ public class DataLoader {
             deviceRepository.save(d1);
 
             // Vytvoření a přiřazení senzoru k zařízení
-            Sensor gps = new Sensor();
-            gps.setName("GPS");
-            gps.setDevice(d1);
+            Sensor humiditySensor = new Sensor();
+            humiditySensor.setName("humidity");
+            humiditySensor.setDevice(d1);
 
             // Uložení senzoru
-            sensorRepository.save(gps);
+            sensorRepository.save(humiditySensor);
 
-            Sensor gyro = new Sensor();
-            gyro.setName("GYRO");
+            Sensor temperatureSensor = new Sensor();
+            temperatureSensor.setName("temperature");
 
             // Uložení senzoru
-            sensorRepository.save(gyro);
+            sensorRepository.save(temperatureSensor);
 
         };
     }

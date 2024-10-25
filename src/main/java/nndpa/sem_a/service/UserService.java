@@ -3,10 +3,7 @@ package nndpa.sem_a.service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import nndpa.sem_a.dto.AppUser.LoginDTO;
-import nndpa.sem_a.dto.AppUser.NewUserDTO;
-import nndpa.sem_a.dto.AppUser.RegisterDTO;
-import nndpa.sem_a.dto.AppUser.UserDTO;
+import nndpa.sem_a.dto.AppUser.*;
 import nndpa.sem_a.entity.AppUser;
 import nndpa.sem_a.entity.Device;
 import nndpa.sem_a.repository.AppUserRepository;
@@ -32,7 +29,7 @@ public class UserService implements UserDetailsService {
     private final JwtAuthenticationService jwtAuthenticationService;
     private final DeviceRepository deviceRepository;
 
-    public Optional<AppUser> findByUsername(String username) {
+    public Optional<AppUser> getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -111,14 +108,17 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("Uživatel nenalezen"));
     }
 
-    public String login(LoginDTO loginDTO) {
+    public LoginResponseDTO login(LoginDTO loginDTO) {
         Optional<AppUser> userOptional = userRepository.findByUsername(loginDTO.getUsername());
 
         if (userOptional.isPresent()) {
             AppUser user = userOptional.get();
 
             if (passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-                return jwtAuthenticationService.generateToken(loginDTO.getUsername());
+                String token = jwtAuthenticationService.generateToken(loginDTO.getUsername());
+
+                // Vrátíme LoginResponse s tokenem a uživatelskými daty
+                return new LoginResponseDTO(token, user.getId(), user.getUsername());
             } else {
                 throw new RuntimeException("Neplatné heslo.");
             }
