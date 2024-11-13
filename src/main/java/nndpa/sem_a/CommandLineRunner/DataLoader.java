@@ -21,7 +21,7 @@ public class DataLoader {
 
     private final PasswordEncoder passwordEncoder;
 
-    @Bean
+    //@Bean
     CommandLineRunner loadData(AppUserRepository userRepository, DeviceRepository deviceRepository, SensorRepository sensorRepository) {
         return args -> {
             // Vytvoření uživatelů

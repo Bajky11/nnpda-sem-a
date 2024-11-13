@@ -17,7 +17,7 @@ import java.util.Random;
 public class DataGenerationService {
 
     private SensorDataRepository sensorDataRepository;
-    private DataSender dataSender;
+    //private DataSender dataSender;
     private final Random random = new Random();
 
     @Scheduled(fixedRate = 5000)
@@ -33,6 +33,6 @@ public class DataGenerationService {
         sensorDataRepository.save(sensorData);
 
         // Zasílání do Logstash
-        dataSender.sendDataToLogstash(sensorData);
+        //dataSender.sendDataToLogstash(sensorData);
     }
 }

@@ -3,7 +3,7 @@ package nndpa.sem_a.controller;
 import lombok.AllArgsConstructor;
 import nndpa.sem_a.entity.SensorData;
 import nndpa.sem_a.repository.SensorDataRepository;
-import nndpa.sem_a.service.DataSender;
+//import nndpa.sem_a.service.DataSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +19,13 @@ public class SensorDataController {
     @Autowired
     private SensorDataRepository sensorDataRepository;
 
-    @Autowired
-    private DataSender dataSender;
+    //@Autowired
+    //private DataSender dataSender;
 
     @PostMapping("/create")
     public ResponseEntity<String> createSensorData(@RequestBody SensorData sensorData) {
         sensorData.setTimestamp(LocalDateTime.now());   // Nastaví aktuální čas jako timestamp
-        dataSender.sendDataToLogstash(sensorData);  // Odeslání dat do Logstash
+        //dataSender.sendDataToLogstash(sensorData);  // Odeslání dat do Logstash
         sensorDataRepository.save(sensorData);  // Uloží data do databáze
         return new ResponseEntity<>("Sensor data created successfully", HttpStatus.CREATED);
     }
